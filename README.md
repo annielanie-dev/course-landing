@@ -38,6 +38,13 @@ course-landing/
 
 ---
 
+## 📸 Zrzuty ekranu
+![screenshot-4](https://github.com/user-attachments/assets/9b655831-8af3-4d54-a660-448f6c2195c2)
+![screenshot-3](https://github.com/user-attachments/assets/c379f57f-68f5-41f2-b238-161148a1bfe2)
+![screenshot-2](https://github.com/user-attachments/assets/506892f8-9f17-4345-8d99-d5da7d4542a6)
+
+---
+
 ## 📌 Autor
 Projekt stworzony przez **[Ania (annielanie-dev)](https://github.com/annielanie-dev)**  
 👉 portfolio: [todo-categories-react.netlify.app](https://todo-categories-react.netlify.app) 
