@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kurs Frontend Start — zapisy</title>
+  <meta name="description" content="Bezpłatny mini-kurs frontendu: React + Vite w praktyce. Zapisz się i pobierz sylabus.">
+ 
+  <!-- SEO / Social -->
+  <meta property="og:title" content="Kurs Frontend Start — zapisy">
+  <meta property="og:description" content="3 spotkania • praktyczny projekt • gotowe repo i deploy. Dołącz teraz!">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/og-image.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Pomiń do treści</a>
+  <header class="topbar">
+    <div class="container row between">
+      <div class="logo">Frontend Start</div>
+      <nav class="nav">
+        <a href="#program">Program</a>
+        <a href="#zapisy">Zapisy</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+      <a class="btn ghost" href="#zapisy">Zapisz się</a>
+    </div>
+  </header>
+
+  <main id="main">
+   
+    <!-- HERO -->
+    <section class="hero hero-img">
+  <div class="hero-overlay"></div>
+  <div class="container center">
+    <p class="kicker">Bezpłatny mini-kurs</p>
+    <h1>Wejdź w frontend: <span class="accent">React + Vite</span></h1>
+    <p class="sub">3 spotkania • praktyczny projekt • gotowe repo i deploy</p>
+    <div class="row center gap">
+      <a class="btn primary" href="#zapisy">Dołącz teraz</a>
+      <a class="btn ghost" href="#program">Zobacz program</a>
+    </div>
+  </div>
+</section>
+
+    <!-- Co zrobimy na kursie -->
+<section class="container grid two">
+  <article class="card">
+    <h2 id="program">Co zrobimy na kursie</h2>
+    <ul class="list">
+    <li><span class="dot"></span><div><strong>Podstawy frontendu</strong>: HTML5, semantyka, dostępność, dobre praktyki</div></li>
+    <li><span class="dot"></span><div><strong>Styling</strong>: nowoczesny CSS, Flexbox, Grid, responsywność, UI komponenty</div></li>
+    <li><span class="dot"></span><div><strong>JavaScript</strong>: logika aplikacji, manipulacja DOM, fetch API, moduły</div></li>
+    <li><span class="dot"></span><div><strong>Frameworki</strong>: wprowadzenie do React — komponenty, props, stan</div></li>
+    <li><span class="dot"></span><div><strong>Deploy</strong>: jak opublikować swoją stronę/aplikację online (Netlify, Vercel)</div></li>
+  </ul>
+
+    <div class="benefits">
+      <div class="pill">Bonus</div>
+      <div class="muted">Szablon README + checklisty pod CV</div>
+    </div>
+
+    <!-- Jak wygląda nauka -->
+<div class="learning">
+  <h2>Jak wygląda nauka</h2>
+  <ul class="list">
+    <li><span class="dot"></span>
+      <div><strong>Warsztaty online</strong> – uczysz się przez praktyczne ćwiczenia zamiast samej teorii. Każdy moduł kończy się zadaniem, które od razu utrwala nowe umiejętności.</div>
+    </li>
+    <li><span class="dot"></span>
+      <div><strong>Feedback i wsparcie</strong> – każde zagadnienie jest tłumaczone w prosty, zrozumiały sposób. Dostajesz też wskazówki, jak poprawić swój kod.</div>
+    </li>
+    <li><span class="dot"></span>
+      <div><strong>Praca jak w realnym zespole</strong> – uczysz się dobrych praktyk, piszesz czytelny kod i poznajesz proces pracy podobny do tego, jak wygląda w firmach IT.</div>
+    </li>
+  </ul>
+</div>
+
+  </article>
+      
+
+      <aside class="card">
+        <h2 id="zapisy">Zapisz się</h2>
+
+        <!-- Netlify Forms -->
+        <form
+          name="zapis-kurs"
+          method="POST"
+          action="/thank-you.html"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          class="form"
+          id="signupForm"
+          novalidate
+        >
+          <input type="hidden" name="form-name" value="zapis-kurs" />
+          <p class="hidden">
+            <label>Nie wypełniaj: <input name="bot-field" /></label>
+          </p>
+
+          <label class="field">
+            <span>Imię i nazwisko</span>
+            <input class="input" type="text" name="name" autocomplete="name" required minlength="2" />
+            <small class="error" data-error-for="name"></small>
+          </label>
+
+          <label class="field">
+            <span>Email</span>
+            <input class="input" type="email" name="email" autocomplete="email" required />
+            <small class="error" data-error-for="email"></small>
+          </label>
+
+          <label class="field">
+            <span>Poziom</span>
+            <select class="select" name="level" required>
+              <option value="">Wybierz…</option>
+              <option value="start">Zaczynam</option>
+              <option value="junior">Junior</option>
+              <option value="mid">Mid</option>
+            </select>
+            <small class="error" data-error-for="level"></small>
+          </label>
+
+          <label class="checkbox">
+            <input type="checkbox" name="consent" required />
+            <span>Wyrażam zgodę na kontakt mailowy w sprawie kursu (RODO).</span>
+          </label>
+          <small class="error" data-error-for="consent"></small>
+
+          <button class="btn primary" type="submit">Wyślij zgłoszenie</button>
+          <p class="notice">Po zapisie dostaniesz mail potwierdzający z sylabusem.</p>
+          <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+        </form>
+      </aside>
+    </section>
+
+    <section class="container grid two">
+      <article class="card">
+        <h2>Instruktorka</h2>
+        <p><strong>Anna</strong> — łączę design i frontend. Robię przejrzyste UI w React. Na kursie pokażę Ci praktykę, której sama szukałam na starcie 😉</p>
+        <div class="row gap">
+          <a class="btn ghost" href="mailto:twoj.email@domena.com">Napisz do mnie</a>
+          <a class="btn ghost" href="https://github.com/annielanie-dev" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="btn ghost" href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2 id="kontakt">FAQ</h2>
+        <details>
+          <summary>Czy kurs jest płatny?</summary>
+          <p>Ten mini-kurs jest bezpłatny. Materiały i nagrania dostaniesz mailem.</p>
+        </details>
+        <details>
+          <summary>Jaki poziom?</summary>
+          <p>Idealny na start (0 → junior). Potrzebny tylko VS Code i chęci.</p>
+        </details>
+        <details>
+          <summary>Co jeśli nie mogę być na live?</summary>
+          <p>Wyślemy nagranie + PDF.</p>
+        </details>
+      </article>
+    </section>
+  </main>
+
+  <!-- CTA -->
+  <div class="cta-sticky">
+    <a class="btn primary" href="#zapisy">Zapisz się na kurs</a>
+  </div>
+
+  <footer class="footer">
+    © 2025 Anna • Polityka prywatności • RODO
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
