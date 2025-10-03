@@ -85,18 +85,16 @@
         <h2 id="zapisy">Zapisz się</h2>
 
         <!-- Netlify Forms -->
-        <form
-          name="zapis-kurs"
-          method="POST"
-          action="/thank-you.html"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          class="form"
-          id="signupForm"
-          novalidate
-          action="https://frontend-start.netlify.app/thank-you.html"
-        >
-          <input type="hidden" name="form-name" value="zapis-kurs" />
+       <form name="zapis-kurs" 
+       action="/thank-you.html" 
+       method="POST" 
+       data-netlify="true" 
+       netlify-honeypot="bot-field" 
+       id="signupForm"
+       novalidate
+       >
+  
+       <input type="hidden" name="form-name" value="zapis-kurs">
           <p class="hidden">
             <label>Nie wypełniaj: <input name="bot-field" /></label>
           </p>
