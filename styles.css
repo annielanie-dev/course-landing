@@ -130,7 +130,10 @@ h3{ font-size:20px }
 
 /* formularz */
 .form{ display:grid; gap:14px }
-.field{ display:grid; gap:6px }
+form .btn[type="submit"] {margin-top: 20px;}
+form .notice {margin-top: 20px;}
+
+.field{ display:grid; gap:20px }
 .field > span{ font-weight:700; font-size:14px; color:#2e3440 }
 .input, .select{
   padding:12px 14px; border-radius:12px; border:1px solid var(--border);
@@ -226,6 +229,3 @@ h3{ font-size:20px }
     background-image: url("images/florian-olivo-JNz9bQD3Oio-unsplash.jpg");
   }
 }
-
-
-
