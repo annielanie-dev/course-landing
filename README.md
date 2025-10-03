@@ -24,7 +24,7 @@ Projekt wykonany w **HTML, CSS i JavaScript**, z dodatkowymi stronami (`thank-yo
 ---
 
 ## 🚀 Demo
-🔗 [Zobacz live na Netlify](https://course-landing.netlify.app)
+🔗 [Zobacz live na Netlify](https://frontend-start.netlify.app/)
 
 ---
 
