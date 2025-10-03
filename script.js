@@ -1,78 +1,109 @@
-// smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach((a) => {
-  a.addEventListener("click", (e) => {
-    const id = a.getAttribute("href");
-    if (id.length > 1 && document.querySelector(id)) {
-      e.preventDefault();
-      document.querySelector(id).scrollIntoView({ behavior: "smooth" });
-    }
+// ============ smooth scroll ============
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  const id = link.getAttribute('href').slice(1);
+  if (!id) return;
+
+  link.addEventListener('click', (e) => {
+    const target = document.getElementById(id);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth' });
   });
 });
 
-// walidacja + lokalne zapamiętywanie formularza
-const form = document.getElementById("signupForm");
-const formMsg = document.getElementById("formMsg");
+
+// ============ formularz ============
+const form = document.getElementById('signupForm');
+const formMsg = document.getElementById('formMsg');
 
 if (form) {
-  // przywróć szkic z localStorage (opcjonalnie)
-  const draft = JSON.parse(localStorage.getItem("signup-draft") || "{}");
-  ["name", "email", "level"].forEach((k) => {
-    if (draft[k] && form.elements[k]) form.elements[k].value = draft[k];
-  });
+  // helpers
+  const $ = (sel) => form.querySelector(sel);
+  const setError = (name, msg = '') => {
+    const holder = form.querySelector(`[data-error-for="${name}"]`);
+    if (holder) holder.textContent = msg;
+    const field = form.elements[name];
+    if (field) field.setAttribute('aria-invalid', msg ? 'true' : 'false');
+  };
+  const encode = (fd) => new URLSearchParams([...fd.entries()]).toString();
 
-  form.addEventListener("input", () => {
+  // ---- przywracm wersję roboczą
+  try {
+    const draft = JSON.parse(localStorage.getItem('signup-draft') || '{}');
+    ['name', 'email', 'level'].forEach((k) => {
+      if (draft[k] && form.elements[k]) form.elements[k].value = draft[k];
+    });
+  } catch {}
+
+  // ---- zapisuje szkic
+  form.addEventListener('input', () => {
     const data = {
-      name: form.elements.name.value,
-      email: form.elements.email.value,
-      level: form.elements.level.value,
+      name: form.elements.name?.value || '',
+      email: form.elements.email?.value || '',
+      level: form.elements.level?.value || '',
     };
-    localStorage.setItem("signup-draft", JSON.stringify(data));
+    localStorage.setItem('signup-draft', JSON.stringify(data));
   });
 
-  form.addEventListener("submit", (e) => {
-    // prosty frontowy check (Netlify i tak jeszcze zwaliduje)
+  // ---- walidacja + submit do Netlify
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // honeypot (anty-bot)
+    const honey = $('input[name="bot-field"]');
+    if (honey && honey.value) return;
+
+    // prosta walidacja
     let ok = true;
 
-    const setError = (name, msg) => {
-      const el = form.querySelector(`[data-error-for="${name}"]`);
-      if (el) el.textContent = msg || "";
-    };
+    const nameVal = form.elements.name?.value.trim();
+    if (!nameVal) {
+      ok = false; setError('name', 'Podaj imię i nazwisko');
+    } else setError('name');
 
-    // czy imię
-    if (!form.elements.name.value.trim()) {
-      setError("name", "Podaj imię i nazwisko");
-      ok = false;
-    } else setError("name", "");
-
-    // email pattern
-    const email = form.elements.email.value.trim();
-    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const emailVal = form.elements.email?.value.trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
     if (!emailOk) {
-      setError("email", "Podaj poprawny email");
-      ok = false;
-    } else setError("email", "");
+      ok = false; setError('email', 'Podaj poprawny email');
+    } else setError('email');
 
-    // poziom
-    if (!form.elements.level.value) {
-      setError("level", "Wybierz poziom");
-      ok = false;
-    } else setError("level", "");
+    const levelVal = form.elements.level?.value;
+    if (!levelVal) {
+      ok = false; setError('level', 'Wybierz poziom');
+    } else setError('level');
 
-    // zgoda
-    const consent = form.elements.consent.checked;
-    if (!consent) {
-      setError("consent", "Wymagana zgoda");
-      ok = false;
-    } else setError("consent", "");
+    const consentOk = !!form.elements.consent?.checked;
+    if (!consentOk) {
+      ok = false; setError('consent', 'Wymagana zgoda');
+    } else setError('consent');
 
     if (!ok) {
-      e.preventDefault();
-      formMsg.textContent = "Popraw zaznaczone pola.";
+      if (formMsg) formMsg.textContent = 'Popraw zaznaczone pola.';
       return;
     }
 
-    // czyścimy szkic po udanym submicie (po stronie success page też można)
-    localStorage.removeItem("signup-draft");
-    formMsg.textContent = "Wysyłam zgłoszenie...";
+    // wysyłka
+    const submitBtn = form.querySelector('[type="submit"]');
+    submitBtn?.setAttribute('disabled', 'true');
+    if (formMsg) formMsg.textContent = 'Wysyłam zgłoszenie...';
+
+    try {
+      const fd = new FormData(form);
+      if (!fd.get('form-name')) fd.set('form-name', form.getAttribute('name') || 'zapis-kurs');
+
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encode(fd),
+      });
+
+      // czyszczę szkic i przekierowuję
+      localStorage.removeItem('signup-draft');
+      window.location.href = form.getAttribute('action') || '/thank-you.html';
+    } catch (err) {
+      console.error(err);
+      if (formMsg) formMsg.textContent = 'Nie udało się wysłać formularza. Spróbuj ponownie.';
+      submitBtn?.removeAttribute('disabled');
+    }
   });
 }
