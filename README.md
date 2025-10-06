@@ -23,11 +23,6 @@ Projekt wykonany w **HTML, CSS i JavaScript**, z dodatkowymi stronami (`thank-yo
 
 ---
 
-## 🚀 Demo
-🔗 [Zobacz live na Netlify](https://frontend-start.netlify.app/)
-
----
-
 ## 📂 Struktura projektu
 course-landing/
 ├── index.html # Strona główna (landing)
@@ -47,5 +42,4 @@ course-landing/
 ---
 
 ## 📌 Autor
-Projekt stworzony przez **[Ania (annielanie-dev)](https://github.com/annielanie-dev)**  
-👉 portfolio: [todo-categories-react.netlify.app](https://todo-categories-react.netlify.app) 
+Projekt stworzony przez **[Ania (annielanie-dev)](https://github.com/annielanie-dev)** 
