@@ -152,32 +152,6 @@ html{ scroll-behavior:smooth }
 }
 
 /* blokada scrolla gdy otwarte */
-.no-scroll { overflow: hidden; } .nav-menu {
-    position: fixed;
-    inset: 0 0 0 auto;      /* dock po prawej */
-    width: min(82vw, 360px);
-    transform: translateX(100%);   /* DOMYŚLNIE schowane */
-    transition: transform .25s ease;
-    background: var(--panel, #0b0b0f);
-    /* opcjonalnie: */
-    visibility: hidden;
-  }
-  .nav-menu.open {
-    transform: translateX(0);      /* OTWARTE */
-    visibility: visible;
-  }
-
-  .backdrop {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,.6);
-  }
-  .backdrop[hidden] { display: none !important; }
-}
-
-/* blokada scrolla gdy otwarte */
-.no-scroll { overflow: hidden; }
-
-/* blokada scrolla gdy otwarte */
 .no-scroll { overflow: hidden; }
 
   /* linki w panelu – jaśniejsze i czytelne */
