@@ -11,13 +11,11 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
   });
 });
 
-
 // ============ formularz ============
 const form = document.getElementById('signupForm');
 const formMsg = document.getElementById('formMsg');
 
 if (form) {
-  // helpers
   const $ = (sel) => form.querySelector(sel);
   const setError = (name, msg = '') => {
     const holder = form.querySelector(`[data-error-for="${name}"]`);
@@ -27,7 +25,6 @@ if (form) {
   };
   const encode = (fd) => new URLSearchParams([...fd.entries()]).toString();
 
-  // ---- przywracm wersję roboczą
   try {
     const draft = JSON.parse(localStorage.getItem('signup-draft') || '{}');
     ['name', 'email', 'level'].forEach((k) => {
@@ -35,7 +32,6 @@ if (form) {
     });
   } catch {}
 
-  // ---- zapisuje szkic
   form.addEventListener('input', () => {
     const data = {
       name: form.elements.name?.value || '',
@@ -45,44 +41,29 @@ if (form) {
     localStorage.setItem('signup-draft', JSON.stringify(data));
   });
 
-  // ---- walidacja + submit do Netlify
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // honeypot (anty-bot)
     const honey = $('input[name="bot-field"]');
     if (honey && honey.value) return;
 
-    // prosta walidacja
     let ok = true;
 
     const nameVal = form.elements.name?.value.trim();
-    if (!nameVal) {
-      ok = false; setError('name', 'Podaj imię i nazwisko');
-    } else setError('name');
+    if (!nameVal) { ok = false; setError('name', 'Podaj imię i nazwisko'); } else setError('name');
 
     const emailVal = form.elements.email?.value.trim();
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
-    if (!emailOk) {
-      ok = false; setError('email', 'Podaj poprawny email');
-    } else setError('email');
+    if (!emailOk) { ok = false; setError('email', 'Podaj poprawny email'); } else setError('email');
 
     const levelVal = form.elements.level?.value;
-    if (!levelVal) {
-      ok = false; setError('level', 'Wybierz poziom');
-    } else setError('level');
+    if (!levelVal) { ok = false; setError('level', 'Wybierz poziom'); } else setError('level');
 
     const consentOk = !!form.elements.consent?.checked;
-    if (!consentOk) {
-      ok = false; setError('consent', 'Wymagana zgoda');
-    } else setError('consent');
+    if (!consentOk) { ok = false; setError('consent', 'Wymagana zgoda'); } else setError('consent');
 
-    if (!ok) {
-      if (formMsg) formMsg.textContent = 'Popraw zaznaczone pola.';
-      return;
-    }
+    if (!ok) { if (formMsg) formMsg.textContent = 'Popraw zaznaczone pola.'; return; }
 
-    // wysyłka
     const submitBtn = form.querySelector('[type="submit"]');
     submitBtn?.setAttribute('disabled', 'true');
     if (formMsg) formMsg.textContent = 'Wysyłam zgłoszenie...';
@@ -97,7 +78,6 @@ if (form) {
         body: encode(fd),
       });
 
-      // czyszczę szkic i przekierowuję
       localStorage.removeItem('signup-draft');
       window.location.href = form.getAttribute('action') || '/thank-you.html';
     } catch (err) {
@@ -107,6 +87,7 @@ if (form) {
     }
   });
 }
+
 // === Off-canvas menu (mobile) ===
 (() => {
   const toggleBtn  = document.querySelector('.menu-toggle');
@@ -127,14 +108,14 @@ if (form) {
     if (backdrop) backdrop.hidden = true;
     if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
   }
-  function setClosedState() { // twarde domknięcie
+  function setClosedState() {
     menuPanel.classList.remove('open');
     document.documentElement.classList.remove('no-scroll');
     if (backdrop) backdrop.hidden = true;
     if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
   }
 
-  // domknij od razu po starcie
+  // domknij od razu po starcie (eliminuje FOUC)
   setClosedState();
 
   // toggle na burgerze
@@ -144,14 +125,37 @@ if (form) {
   closeBtn?.addEventListener('click', closeMenu);
   backdrop?.addEventListener('click', closeMenu);
 
-  // zamykaj po kliknięciu linku
+  // zamykaj po kliknięciu linku w panelu
   menuPanel.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
 
   // zamykaj Esc
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
 
   // zamknij przy zmianie szerokości (desktop/mobile)
-  const mql = window.matchMedia('(max-width: 820px)');
+  const mq = window.matchMedia('(max-width: 820px)');
   const onChange = () => setClosedState();
-  mql.addEventListener ? mql.addEventListener('change', onChange) : mql.addListener(onChange);
+  mq.addEventListener ? mq.addEventListener('change', onChange) : mq.addListener(onChange);
+})();
+
+// płynne przewijanie z uwzględnieniem wysokości sticky headera
+(() => {
+  const header = document.querySelector('.topbar');
+  const headerOffset = header ? header.offsetHeight : 80;
+
+  document.querySelectorAll('.nav-menu a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      e.preventDefault();
+      // zamknij panel, jeśli otwarty
+      const maybeClose = document.querySelector('.nav-menu.open');
+      if (maybeClose) {
+        setTimeout(() => { window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - headerOffset, behavior:'smooth' }); }, 10);
+      } else {
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - headerOffset, behavior:'smooth' });
+      }
+    });
+  });
 })();
