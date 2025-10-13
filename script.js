@@ -126,6 +126,22 @@ function closeMenu() {
   if (backdrop) backdrop.hidden = true;
   if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
 }
+function ensureClosed() {
+  const isMobile = window.matchMedia('(max-width: 820px)').matches;
+
+  if (isMobile) {
+    // na mobile menu ma być domyślnie ZAMKNIĘTE
+    closeMenu();
+  } else {
+    // na desktopie też wyczyść stan, gdyby coś zostało
+    menuPanel?.classList.remove('open');
+    document.documentElement.classList.remove('no-scroll');
+    if (backdrop) backdrop.hidden = true;
+    if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+  }
+}
+ensureClosed();
+window.addEventListener('resize', ensureClosed);
 
 toggleBtn?.addEventListener('click', openMenu);
 closeBtn?.addEventListener('click', closeMenu);
