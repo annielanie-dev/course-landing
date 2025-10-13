@@ -220,12 +220,12 @@ form .notice {margin-top: 20px;}
 /* TABLET */
 @media (max-width: 900px){
   .hero.hero-img{
-    background-image: url("images/markus-spiske-Skf7HxARcoc-unsplash.jpg");
+    background-image: url("images/denise-jans-ZEtE38ybfao-unsplash.jpg");
   }
 }
 /* MOBILE */
 @media (max-width: 560px){
   .hero.hero-img{
-    background-image: url("images/florian-olivo-JNz9bQD3Oio-unsplash.jpg");
+    background-image: url("images/denise-jans-ZEtE38ybfao-unsplash.jpg");
   }
 }
