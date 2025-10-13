@@ -108,72 +108,50 @@ if (form) {
   });
 }
 // === Off-canvas menu (mobile) ===
-const toggleBtn  = document.querySelector('.menu-toggle');
-const menuPanel  = document.querySelector('.nav-menu');
-const closeBtn   = document.querySelector('.close-btn');
-const backdrop   = document.querySelector('.backdrop');
+(() => {
+  const toggleBtn  = document.querySelector('.menu-toggle');
+  const menuPanel  = document.querySelector('.nav-menu');
+  const closeBtn   = document.querySelector('.close-btn');
+  const backdrop   = document.querySelector('.backdrop');
+  if (!menuPanel) return;
 
-function openMenu() {
-  menuPanel.classList.add('open');
-  document.documentElement.classList.add('no-scroll');
-  if (backdrop) backdrop.hidden = false;
-  if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true');
-}
-
-function closeMenu() {
-  menuPanel.classList.remove('open');
-  document.documentElement.classList.remove('no-scroll');
-  if (backdrop) backdrop.hidden = true;
-  if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
-}
-function ensureClosed() {
-  const isMobile = window.matchMedia('(max-width: 820px)').matches;
-
-  if (isMobile) {
-    // na mobile menu ma być domyślnie ZAMKNIĘTE
-    closeMenu();
-  } else {
-    // na desktopie też wyczyść stan, gdyby coś zostało
-    menuPanel?.classList.remove('open');
+  function openMenu() {
+    menuPanel.classList.add('open');
+    document.documentElement.classList.add('no-scroll');
+    if (backdrop) backdrop.hidden = false;
+    if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true');
+  }
+  function closeMenu() {
+    menuPanel.classList.remove('open');
     document.documentElement.classList.remove('no-scroll');
     if (backdrop) backdrop.hidden = true;
     if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
   }
-}
-ensureClosed();
-window.addEventListener('resize', ensureClosed);
+  function setClosedState() { // twarde domknięcie
+    menuPanel.classList.remove('open');
+    document.documentElement.classList.remove('no-scroll');
+    if (backdrop) backdrop.hidden = true;
+    if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+  }
 
-toggleBtn?.addEventListener('click', openMenu);
-closeBtn?.addEventListener('click', closeMenu);
-backdrop?.addEventListener('click', closeMenu);
+  // domknij od razu po starcie
+  setClosedState();
 
-// zamykaj po kliknięciu linku
-menuPanel?.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  // toggle na burgerze
+  toggleBtn?.addEventListener('click', () =>
+    menuPanel.classList.contains('open') ? closeMenu() : openMenu()
+  );
+  closeBtn?.addEventListener('click', closeMenu);
+  backdrop?.addEventListener('click', closeMenu);
 
-// zamykaj Esc
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+  // zamykaj po kliknięciu linku
+  menuPanel.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
 
-// płynne przewijanie z uwzględnieniem wysokości sticky headera
-(function () {
-  const header = document.querySelector('.topbar');
-  const headerOffset = header ? header.offsetHeight : 80;
+  // zamykaj Esc
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
 
-  document.querySelectorAll('.nav-menu a[href^="#"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const id = a.getAttribute('href').slice(1);
-      const el = document.getElementById(id);
-      if (!el) return; // brak sekcji = normalny klik
-
-      e.preventDefault();
-      // zamknij panel, jeśli otwarty
-      if (typeof closeMenu === 'function') closeMenu();
-
-      // przewiń z offsetem po zamknięciu panelu
-      setTimeout(() => {
-        const y = el.getBoundingClientRect().top + window.scrollY - headerOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }, 10);
-    });
-  });
+  // zamknij przy zmianie szerokości (desktop/mobile)
+  const mql = window.matchMedia('(max-width: 820px)');
+  const onChange = () => setClosedState();
+  mql.addEventListener ? mql.addEventListener('change', onChange) : mql.addListener(onChange);
 })();
-
