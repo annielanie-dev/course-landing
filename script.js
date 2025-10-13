@@ -107,3 +107,32 @@ if (form) {
     }
   });
 }
+// === Off-canvas menu (mobile) ===
+const toggleBtn  = document.querySelector('.menu-toggle');
+const menuPanel  = document.querySelector('.nav-menu');
+const closeBtn   = document.querySelector('.close-btn');
+const backdrop   = document.querySelector('.backdrop');
+
+function openMenu() {
+  menuPanel.classList.add('open');
+  document.documentElement.classList.add('no-scroll');
+  if (backdrop) backdrop.hidden = false;
+  if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true');
+}
+
+function closeMenu() {
+  menuPanel.classList.remove('open');
+  document.documentElement.classList.remove('no-scroll');
+  if (backdrop) backdrop.hidden = true;
+  if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+}
+
+toggleBtn?.addEventListener('click', openMenu);
+closeBtn?.addEventListener('click', closeMenu);
+backdrop?.addEventListener('click', closeMenu);
+
+// zamykaj po kliknięciu linku
+menuPanel?.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+// zamykaj Esc
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
