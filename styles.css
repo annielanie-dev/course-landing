@@ -155,13 +155,6 @@ html{ scroll-behavior:smooth }
 /* blokada scrolla gdy otwarte */
 .no-scroll { overflow: hidden; }
 
-  .close-btn{
-    display:block;
-    position:absolute;
-    top:16px; right:18px;
-    font-size:36px;
-  }
-
   /* linki w panelu – jaśniejsze i czytelne */
   .nav-menu a{
     color:#f2f3f7;
