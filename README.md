@@ -11,7 +11,6 @@ Projekt wykonany w **HTML, CSS i JavaScript**, z dodatkowymi stronami (`thank-yo
 - **Jak wygląda nauka** — opis etapów edukacji.
 - Formularz zapisu (`Netlify Forms`) z walidacją i stroną podziękowania (`thank-you.html`).
 - Responsywny, pastelowy, nowoczesny design.
-- Deploy na Netlify.
 
 ---
 
