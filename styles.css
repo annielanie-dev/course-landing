@@ -113,6 +113,7 @@ html{ scroll-behavior:smooth }
 
 /* ============ NAV – MOBILE (off-canvas z prawej) ============ */
 @media (max-width:820px){
+
   .menu-toggle{
     display:block;
     color:#e9e9ee;
@@ -122,7 +123,8 @@ html{ scroll-behavior:smooth }
     padding:6px 10px;
     box-shadow:0 2px 8px rgba(0,0,0,.25);
   }
-   .nav-menu{
+
+  .nav-menu{
     position:fixed;
     top:0; right:0;
     height:100vh;
@@ -136,29 +138,31 @@ html{ scroll-behavior:smooth }
     align-items:flex-start;
     gap:18px;
 
-    transform:translateX(100%);
-    transition:transform .28s ease; 
+    transform:translateX(100%);     /* schowany */
+    visibility:hidden;               /* schowany (bez FOUC) */
+    transition:transform .28s ease, visibility 0s .28s;
     z-index:1001; /* nad overlayem */
   }
-  .nav-menu.open{ transform:translateX(0); visibility: visible; }
-
-  backdrop {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,.6);
+  .nav-menu.open{
+    transform:translateX(0);
+    visibility:visible;              /* widoczny */
+    transition:transform .28s ease, visibility 0s 0s;
   }
-  .backdrop[hidden] { display: none !important; }
-}
 
-.close-btn {
-  display: flex;
-  position: absolute;
-  top: 16px;
-  right: 18px;
-  font-size: 36px;
-}
+  .close-btn{
+    display:flex;
+    position:absolute;
+    top:16px; right:18px;
+    font-size:36px;
+  }
 
-/* blokada scrolla gdy otwarte */
-.no-scroll { overflow: hidden; }
+  /* overlay pod panelem */
+  .backdrop{
+    position:fixed; inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:1000;
+  }
+  .backdrop[hidden]{ display:none !important; }
 
   /* linki w panelu – jaśniejsze i czytelne */
   .nav-menu a{
@@ -176,10 +180,8 @@ html{ scroll-behavior:smooth }
   .nav-menu.open a:nth-of-type(1){ transition-delay:.02s }
   .nav-menu.open a:nth-of-type(2){ transition-delay:.05s }
   .nav-menu.open a:nth-of-type(3){ transition-delay:.08s }
-
-  /* (opcjonalnie) schowaj przycisk w headerze na mobile
-     .btn.ghost{ display:none } */
 }
+/* koniec NAV – MOBILE */
 
 /* Hero */
 .hero{ padding:78px 0 32px }
