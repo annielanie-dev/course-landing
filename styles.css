@@ -138,8 +138,6 @@ html{ scroll-behavior:smooth }
 
     transform:translateX(100%);
     transition:transform .28s ease; 
-    /* opcjonalnie: */
-    visibility: hidden;
     z-index:1001; /* nad overlayem */
   }
   .nav-menu.open{ transform:translateX(0); visibility: visible; }
