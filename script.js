@@ -136,3 +136,28 @@ menuPanel?.querySelectorAll('a').forEach(a => a.addEventListener('click', closeM
 
 // zamykaj Esc
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+// płynne przewijanie z uwzględnieniem wysokości sticky headera
+(function () {
+  const header = document.querySelector('.topbar');
+  const headerOffset = header ? header.offsetHeight : 80;
+
+  document.querySelectorAll('.nav-menu a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (!el) return; // brak sekcji = normalny klik
+
+      e.preventDefault();
+      // zamknij panel, jeśli otwarty
+      if (typeof closeMenu === 'function') closeMenu();
+
+      // przewiń z offsetem po zamknięciu panelu
+      setTimeout(() => {
+        const y = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }, 10);
+    });
+  });
+})();
+
