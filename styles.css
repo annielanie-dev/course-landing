@@ -150,11 +150,12 @@ html{ scroll-behavior:smooth }
 }
 
 .close-btn {
-  display: block;
+  display: flex;
   position: absolute;
   top: 16px;
   right: 18px;
-  font-size: 36px;}
+  font-size: 36px;
+}
 
 /* blokada scrolla gdy otwarte */
 .no-scroll { overflow: hidden; }
