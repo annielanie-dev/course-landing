@@ -24,12 +24,13 @@ Projekt wykonany w **HTML, CSS i JavaScript**, z dodatkowymi stronami (`thank-yo
 ---
 
 ## 📂 Struktura projektu
-course-landing/
-├── index.html # Strona główna (landing)
-├── thank-you.html # Strona podziękowania po wysłaniu formularza
-├── styles.css # Główny arkusz stylów
-├── script.js # Walidacja formularza
-└── images/ # Obrazy użyte w projekcie
+images/ # Obrazy użyte w projekcie
+LICENSE
+README.md
+index.html 
+thank-you.html 
+styles.css 
+script.js 
 
 ---
 
@@ -41,5 +42,16 @@ course-landing/
 
 ---
 
+## 🔗 Demo
+- GitHub Pages: `https://annielanie-dev.github.io/course-landing/`
+- Repo: `https://github.com/annielanie-dev/course-landing/`
+
+---
+
 ## 📌 Autor
-Projekt stworzony przez **[Ania (annielanie-dev)](https://github.com/annielanie-dev)** 
+Projekt stworzony przez **[Ania (annielanie-dev)](https://github.com/annielanie-dev)**  
+
+---
+
+## 📄 Licencja
+Ten projekt dostępny na licencji [MIT](LICENSE).
