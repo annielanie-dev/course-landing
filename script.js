@@ -88,7 +88,7 @@ if (form) {
   });
 }
 
-// === Off-canvas menu (mobile) ===
+// === mobile ===
 (() => {
   const toggleBtn  = document.querySelector('.menu-toggle');
   const menuPanel  = document.querySelector('.nav-menu');
@@ -115,10 +115,10 @@ if (form) {
     if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
   }
 
-  // domknij od razu po starcie (eliminuje FOUC)
+  // zamknij od razu po starcie
   setClosedState();
 
-  // toggle na burgerze
+  // toggle
   toggleBtn?.addEventListener('click', () =>
     menuPanel.classList.contains('open') ? closeMenu() : openMenu()
   );
@@ -131,7 +131,7 @@ if (form) {
   // zamykaj Esc
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
 
-  // zamknij przy zmianie szerokości (desktop/mobile)
+  // zamknij przy zmianie szerokości
   const mq = window.matchMedia('(max-width: 820px)');
   const onChange = () => setClosedState();
   mq.addEventListener ? mq.addEventListener('change', onChange) : mq.addListener(onChange);
