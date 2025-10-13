@@ -314,3 +314,6 @@ form .notice{ margin-top:20px }
     background-image:url("images/denise-jans-ZEtE38ybfao-unsplash.jpg");
   }
 }
+/* offset dla sekcji z kotwicą, żeby nie wchodziły pod sticky header */
+[id] { scroll-margin-top: 88px; } /* dostosuj 88px do wysokości .topbar */
+
